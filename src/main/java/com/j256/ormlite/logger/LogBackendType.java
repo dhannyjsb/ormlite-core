@@ -98,12 +98,12 @@ public enum LogBackendType implements LogBackendFactory {
 			// sometimes the constructor works but it's not fully wired
 			LogBackendFactory factory = (LogBackendFactory) Class.forName(factoryClassName).newInstance();
 			// we may really need to use the class before we see issues
-			factory.createLogBackend("test").isLevelEnabled(Level.INFO);
+			factory.createLogBackend("test").isLevelEnabled(Level.OFF);
 			return factory;
 		} catch (Throwable th) {
 			// we catch throwable here because we could get linkage errors
 			LogBackend backend = new LocalLogBackend(LogBackendType.class.getSimpleName() + "." + this);
-			backend.log(Level.WARNING, "Unable to get new instance of class " + factoryClassName
+			backend.log(Level.OFF, "Unable to get new instance of class " + factoryClassName
 					+ ", so had to use local log: " + th.getMessage());
 			return new LocalLogBackendFactory();
 		}
